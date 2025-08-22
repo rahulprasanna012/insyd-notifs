@@ -8,7 +8,7 @@ const User = require("../models/User");
  *   type: "like" | "comment" | "follow" | "new_post",
  *   actorId: "userA",
  *   recipientId?: "userB",     // required except for new_post
- *   entityId?: "post123",
+ * 
  *   data?: { commentPreview?: string }
  * }
  */
@@ -71,7 +71,7 @@ const createEvent = async (req, res) => {
       userId: recipientId,
       type,
       actorId,
-      entityId,
+    
       content: { title, preview: data?.commentPreview || "" },
       isRead: false,
       createdAt: now,

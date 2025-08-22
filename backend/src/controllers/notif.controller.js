@@ -1,5 +1,5 @@
 const Notification = require("../models/Notification");
-
+const mongoose = require("mongoose");
 
 
 /**
@@ -51,25 +51,32 @@ const Notification = require("../models/Notification");
  * POST /notifications/mark-read
  * Body: { ids: string[] }
  */
- const markRead = async (req, res) => {
+const markRead = async (req, res) => {
   try {
-    const ids = Array.isArray(req.body?.ids) ? req.body.ids.filter(Boolean) : [];
-    if (!ids.length) {
+    const rawIds = Array.isArray(req.body?.ids) ? req.body.ids : [];
+    if (!rawIds.length) {
       return res.status(400).json({ error: "ids array is required" });
     }
 
+    // validate + cast
+    const objectIds = rawIds
+      .filter((id) => typeof id === "string" && mongoose.isValidObjectId(id.trim()))
+      .map((id) => new mongoose.Types.ObjectId(id.trim()));
+
+    if (!objectIds.length) {
+      return res.status(400).json({ error: "no valid ObjectIds provided" });
+    }
+
     const result = await Notification.updateMany(
-      { _id: { $in: ids } },
+      { _id: { $in: objectIds } },
       { $set: { isRead: true } }
     );
 
-    return res.status(200).json({ updated: result.modifiedCount || 0 });
+    return res.status(200).json({ updated: result.modifiedCount || 0, attempted: rawIds.length });
   } catch (err) {
-    // eslint-disable-next-line no-console
     console.error("[notif.markRead] error:", err);
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
-
 
 module.exports={markRead,listNotifications}
