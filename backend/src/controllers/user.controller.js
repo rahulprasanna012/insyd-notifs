@@ -1,4 +1,4 @@
-import User from "../models/User";
+const User = require("../models/User");
 
 
 /**
@@ -6,7 +6,7 @@ import User from "../models/User";
  * Body: { _id: "userA", username: "Alice", email?: "a@example.com" }
  * Creates a new user.
  */
-export const createUser = async (req, res) => {
+ const createUser = async (req, res) => {
   try {
     const { _id, username, email } = req.body || {};
     if (!_id || !username) {
@@ -28,7 +28,7 @@ export const createUser = async (req, res) => {
  * GET /users/:id
  * Fetch a single user by ID.
  */
-export const getUser = async (req, res) => {
+ const getUser = async (req, res) => {
   try {
     const user = await User.findById(req.params.id).lean();
     if (!user) return res.status(404).json({ error: "User not found" });
@@ -44,7 +44,7 @@ export const getUser = async (req, res) => {
  * GET /users
  * List all users (limit optional).
  */
-export const listUsers = async (req, res) => {
+ const listUsers = async (req, res) => {
   try {
     const limit = Math.min(parseInt(req.query.limit || "50", 10), 200);
     const users = await User.find().limit(limit).lean();
@@ -61,7 +61,7 @@ export const listUsers = async (req, res) => {
  * Body: { followerId: "userB" }
  * Add followerId to user’s followers[] array.
  */
-export const addFollower = async (req, res) => {
+ const addFollower = async (req, res) => {
   try {
     const { followerId } = req.body || {};
     if (!followerId) {
@@ -82,3 +82,6 @@ export const addFollower = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+module.exports = {addFollower,createUser,getUser, listUsers};

@@ -1,6 +1,6 @@
-import Notification from "../models/Notification";
-import User from "../models/User";
 
+const Notification = require("../models/Notification");
+const User = require("../models/User");
 
 /**
  * Body:
@@ -12,7 +12,7 @@ import User from "../models/User";
  *   data?: { commentPreview?: string }
  * }
  */
-export const createEvent = async (req, res) => {
+const createEvent = async (req, res) => {
   try {
     const { type, actorId, recipientId,  data } = req.body || {};
 
@@ -85,3 +85,6 @@ export const createEvent = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+module.exports = { createEvent };

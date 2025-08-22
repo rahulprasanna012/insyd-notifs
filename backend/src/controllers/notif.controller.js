@@ -1,11 +1,13 @@
-import Notification from "../models/Notification";
+const Notification = require("../models/Notification");
+
+
 
 /**
  * GET /notifications?userId=<id>&limit=20&cursor=<ISO or ObjectId>
  * - Sort: newest first
  * - Cursor: createdAt (ISO) preferred; fallback to ObjectId if you pass one
  */
-export const listNotifications = async (req, res) => {
+ const listNotifications = async (req, res) => {
   try {
     const userId = String(req.query.userId || "").trim();
     if (!userId) {
@@ -49,7 +51,7 @@ export const listNotifications = async (req, res) => {
  * POST /notifications/mark-read
  * Body: { ids: string[] }
  */
-export const markRead = async (req, res) => {
+ const markRead = async (req, res) => {
   try {
     const ids = Array.isArray(req.body?.ids) ? req.body.ids.filter(Boolean) : [];
     if (!ids.length) {
@@ -68,3 +70,6 @@ export const markRead = async (req, res) => {
     return res.status(500).json({ error: "Internal Server Error" });
   }
 };
+
+
+module.exports={markRead,listNotifications}

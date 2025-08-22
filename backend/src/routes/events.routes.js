@@ -1,5 +1,9 @@
-import { Router } from "express";
-import { createEvent } from "../controllers/events.controller.js";
+
+const Router = require("express");
+const { createEvent } = require("../controllers/events.controller");
+
+
 const r = Router();
 r.post("/", createEvent);
-export default r;
+
+module.exports = r;

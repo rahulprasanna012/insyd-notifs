@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 const EventSchema = new mongoose.Schema(
   {
     type: {
@@ -26,4 +25,4 @@ const EventSchema = new mongoose.Schema(
 // Helps query recent events 
 EventSchema.index({ createdAt: -1 });
 
-export default mongoose.model("Event", EventSchema);
+module.exports= mongoose.model("Event", EventSchema);

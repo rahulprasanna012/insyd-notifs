@@ -1,5 +1,4 @@
-import mongoose from "mongoose";
-
+const mongoose = require("mongoose");
 const ContentSchema = new mongoose.Schema(
   {
     title: { type: String, required: true },  // e.g., "Aditi liked your post"
@@ -42,4 +41,4 @@ NotificationSchema.index({ userId: 1, createdAt: -1 });
 //   { unique: true, partialFilterExpression: { createdAt: { $exists: true } } }
 // );
 
-export default mongoose.model("Notification", NotificationSchema);
+module.exports= mongoose.model("Notification", NotificationSchema);

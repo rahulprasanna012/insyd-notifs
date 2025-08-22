@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
 const UserSchema = new mongoose.Schema(
   {
@@ -18,4 +18,4 @@ const UserSchema = new mongoose.Schema(
 // Handy index for follower lookups (not strictly required for POC)
 UserSchema.index({ username: 1 });
 
-export default mongoose.model("User", UserSchema);
+module.exports=mongoose.model("User", UserSchema);
