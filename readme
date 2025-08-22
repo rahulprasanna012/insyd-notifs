@@ -1,0 +1,148 @@
+# 🔔 Insyd Notification System – Proof of Concept (POC)
+
+This repository contains a **Proof-of-Concept (POC) Notification System** for **Insyd**, a social web platform for the Architecture Industry.  
+The assignment includes:
+1. **System Design Document** (architecture, APIs, scaling plan)  
+2. **POC App** with **ReactJS frontend** and **NodeJS backend**
+
+---
+
+## 🎯 Objectives
+- Build a simple **notification system** supporting **polling**.  
+- Design for **100 DAUs** initially, with scalability to **1M DAUs**.  
+- Deliver **clean, modular React + NodeJS code**.  
+- White & Blue theme UI for frontend.
+
+---
+
+## 🏗️ System Design
+
+### Architecture
+[Events] ---> [NodeJS Backend] ---> [MongoDB]
+|
+[Polling API]
+|
+[ReactJS Frontend]
+
+rust
+Copy
+Edit
+
+### Data Model (MongoDB)
+```js
+Notification {
+  _id: ObjectId,
+  entityId: String,     // PostID, UserID, etc.
+  userId: String,       // recipient
+  type: String,         // "like", "comment", "follow"
+  message: String,      // display text
+  isRead: Boolean,      // read/unread
+  createdAt: Date
+}
+API Endpoints
+POST /notifications → Create a new notification
+
+GET /notifications/:userId → Fetch notifications for a user
+
+PATCH /notifications/:id/read → Mark notification as read
+
+⚙️ POC Application
+1. Backend (NodeJS + Express)
+REST APIs for notifications
+
+MongoDB schema & storage
+
+JSON responses for frontend polling
+
+Setup
+
+bash
+Copy
+Edit
+cd backend
+npm install
+npm run dev
+2. Frontend (ReactJS)
+White + Blue themed UI
+
+Polling every 5–10 seconds
+
+Components:
+
+NotificationBell.jsx → shows unread count
+
+NotificationList.jsx → dropdown with recent notifications
+
+Setup
+
+bash
+Copy
+Edit
+cd frontend
+npm install
+npm start
+🚀 Running the Project
+Start MongoDB locally or with Docker:
+
+bash
+Copy
+Edit
+docker run -d -p 27017:27017 mongo
+Run Backend:
+
+bash
+Copy
+Edit
+cd backend
+npm run dev
+Run Frontend:
+
+bash
+Copy
+Edit
+cd frontend
+npm start
+Visit: http://localhost:3000
+
+🔮 Scalability Plan
+100 DAUs → Polling every 10s (sufficient for demo).
+
+1M DAUs → Move to:
+
+WebSockets for real-time updates
+
+Message Queues (Kafka/RabbitMQ) for event processing
+
+Redis for caching frequent reads
+
+Sharded MongoDB or SQL for horizontal scaling
+
+📌 Features
+Notification bell with count
+
+Dropdown list with latest notifications
+
+Polling API to fetch updates
+
+Mark notifications as read/unread
+
+🛠️ Tech Stack
+Frontend: ReactJS, TailwindCSS (white + blue theme)
+
+Backend: NodeJS, Express
+
+Database: MongoDB
+
+Future Scaling: Redis, Kafka, WebSockets
+
+✅ Summary
+This POC demonstrates:
+
+Notification storage, delivery, and UI
+
+Polling-based retrieval for small DAUs
+
+Scalability roadmap for 1M+ DAUs
+
+👨‍💻 Author: Prasanna
+📌 For: Insyd – POC Assignment
