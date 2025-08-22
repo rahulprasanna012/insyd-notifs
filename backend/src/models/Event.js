@@ -13,7 +13,7 @@ const EventSchema = new mongoose.Schema(
     // who should receive the notification (not needed for new_post fanout)
     recipientId: { type: String },
 
-    
+    entityId: { type: String },
     // extra small payload: e.g., { commentPreview: "Nice!" }
     data: { type: mongoose.Schema.Types.Mixed },
 

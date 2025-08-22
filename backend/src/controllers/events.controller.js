@@ -14,7 +14,7 @@ const User = require("../models/User");
  */
 const createEvent = async (req, res) => {
   try {
-    const { type, actorId, recipientId,  data } = req.body || {};
+    const { type, actorId, recipientId, entityId, data } = req.body || {};
 
     if (!type || !actorId) {
       return res.status(400).json({ error: "type and actorId are required" });
@@ -39,7 +39,7 @@ const createEvent = async (req, res) => {
           userId: uid,
           type,
           actorId,
-       
+          entityId,
           content: { title: `${actor.username || actorId} published a new post`, preview: "" },
           isRead: false,
           createdAt: now,
@@ -71,7 +71,7 @@ const createEvent = async (req, res) => {
       userId: recipientId,
       type,
       actorId,
-    
+      entityId,
       content: { title, preview: data?.commentPreview || "" },
       isRead: false,
       createdAt: now,
