@@ -21,5 +21,5 @@ app.use("/notifications", notifRoutes);
 
 const PORT = process.env.PORT || 5000;
 connectDb().then(() => {
-  app.listen(PORT, () => console.log(`Server Running on :${PORT}`));
+  app.listen(PORT,"0.0.0.0", () => console.log(`Server Running on :${PORT}`));
 });
